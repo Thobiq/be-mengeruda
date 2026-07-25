@@ -19,7 +19,15 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:5175', 'http://sso.mengeruda.id'],
+    'allowed_origins' => [
+        'http://localhost:5173', 
+        'http://localhost:5174', 
+        'http://localhost:5175', 
+        'https://sso.mengeruda.id', 
+        'https://mengeruda.id',
+        'https://tourism.mengeruda.id',
+
+    ],
 
     'allowed_origins_patterns' => [],
 
