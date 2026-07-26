@@ -76,6 +76,7 @@ return new class extends Migration
             $table->string('name');
             $table->date('date');
             $table->string('location')->nullable();
+            $table->longText('description')->nullable();
             $table->string('status')->default('Akan Datang');
             $table->string('image')->nullable();
             $table->timestamps();

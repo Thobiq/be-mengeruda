@@ -159,6 +159,7 @@ class TourismSeeder extends Seeder
                 'name' => 'Festival Reba',
                 'date' => '2026-04-28',
                 'location' => 'Pusat Desa Mengeruda',
+                'description' => 'Festival Reba merupakan perayaan tahun baru adat masyarakat Ngada sebagai bentuk penghormatan tertinggi kepada para leluhur dan ungkapan rasa syukur atas kelimpahan panen hasil bumi. Perayaan sakral ini ditandai dengan tradisi makan ubi bersama, tarian massal yang diiringi musik tradisional, serta ritual penyucian adat yang mengikat kebersamaan antar-warga desa dan wisatawan yang berkunjung.',
                 'status' => 'Akan Datang',
                 'image' => '/hero-1.jpg',
             ]);
@@ -166,6 +167,7 @@ class TourismSeeder extends Seeder
                 'name' => 'Upacara Adat Penti',
                 'date' => '2026-08-15',
                 'location' => 'Rumah Adat Soa',
+                'description' => 'Upacara Adat Penti adalah perhelatan agung tahunan yang dilaksanakan di kawasan Rumah Adat Soa, Mengeruda. Upacara ini menjadi momen spiritual untuk memohon perlindungan, ketenteraman, dan kesuburan bagi tanah adat dan mata air panas alami. Wisatawan diundang untuk menyaksikan kemegahan busana adat khas Ngada, tarian Ja\'i bersama, serta prosesi syukuran yang syarat akan nilai luhur.',
                 'status' => 'Direncanakan',
                 'image' => '/hero-1.jpg',
             ]);

@@ -15,6 +15,7 @@ class TourismEvent extends Model
         'name',
         'date',
         'location',
+        'description',
         'status',
         'image',
     ];

@@ -15,6 +15,19 @@ class GalleryController extends Controller
     public function index()
     {
         $galleries = Gallery::latest()->get();
+
+        $galleries->transform(function ($item) {
+            if ($item->image_path) {
+                if (str_starts_with($item->image_path, 'http://') || str_starts_with($item->image_path, 'https://')) {
+                    $item->image_url = $item->image_path;
+                } else {
+                    $clean = ltrim(str_replace('/storage/', '', $item->image_path), '/');
+                    $item->image_url = asset('storage/' . $clean);
+                }
+            }
+            return $item;
+        });
+
         return response()->json([
             'success' => true,
             'data' => $galleries

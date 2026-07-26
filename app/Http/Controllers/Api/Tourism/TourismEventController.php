@@ -43,6 +43,7 @@ class TourismEventController extends Controller
             'name' => 'required|string|max:255',
             'date' => 'required|date',
             'location' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
             'status' => 'nullable|string|max:50',
             'image' => 'nullable',
         ]);
@@ -59,6 +60,7 @@ class TourismEventController extends Controller
             'name' => $validated['name'],
             'date' => $validated['date'],
             'location' => $validated['location'] ?? null,
+            'description' => $validated['description'] ?? null,
             'status' => $validated['status'] ?? 'Akan Datang',
             'image' => $imagePath,
         ]);
@@ -81,6 +83,7 @@ class TourismEventController extends Controller
             'name' => 'sometimes|required|string|max:255',
             'date' => 'nullable|date',
             'location' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
             'status' => 'nullable|string|max:50',
             'image' => 'nullable',
         ]);
