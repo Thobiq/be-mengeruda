@@ -90,6 +90,9 @@ return new class extends Migration
             $table->string('telepon')->nullable();
             $table->string('email')->nullable();
             $table->string('alamat')->nullable();
+            $table->string('logo')->nullable();
+            $table->string('hero_image')->nullable();
+            $table->json('hero_images')->nullable();
             $table->timestamps();
         });
     }

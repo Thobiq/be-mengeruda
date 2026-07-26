@@ -18,5 +18,8 @@ class TourismProfile extends Model
         'telepon',
         'email',
         'alamat',
+        'logo',
+        'hero_image',
+        'hero_images',
     ];
 }

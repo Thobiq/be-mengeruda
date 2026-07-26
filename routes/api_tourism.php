@@ -86,8 +86,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/events/{id}', [TourismEventController::class, 'update']);
     Route::delete('/events/{id}', [TourismEventController::class, 'destroy']);
 
-    // 7. Profil Pariwisata Update
+    // 7. Profil Pariwisata Update (PUT dan POST untuk wsp upload FormData)
     Route::put('/profile', [TourismProfileController::class, 'update']);
+    Route::post('/profile', [TourismProfileController::class, 'update']);
 
     // 8. Upload Gambar untuk Quill JS / Content Editor
     Route::post('/upload-image', [ImageUploadController::class, 'upload']);
