@@ -41,5 +41,12 @@ class DatabaseSeeder extends Seeder
 
         // 4. Assign Role ke User
         $admin->roles()->syncWithoutDetaching([$superAdminRole->id]);
+
+        $this->call([
+            RbacSeeder::class,
+            ESuratRoleSeeder::class,
+            LetterTemplateSeeder::class,
+            TourismSeeder::class,
+        ]);
     }
 }

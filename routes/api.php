@@ -21,10 +21,14 @@ use App\Http\Controllers\Api\ApbDesaController;
 */
 
 use App\Http\Controllers\PerangkatDesaController;
+use App\Http\Controllers\Api\AuthController;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+// Rute Autentikasi Mandiri Profile Desa
+Route::post('/login', [AuthController::class, 'login']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/user', [AuthController::class, 'user']);
+});
 
 // Struktur Desa (Publik)
 Route::get('/struktur-desa', [PerangkatDesaController::class, 'index']);
@@ -60,6 +64,9 @@ Route::post('/village-profile/narasi', [VillageProfileController::class, 'update
 Route::get('/news', [NewsController::class, 'index']);
 Route::get('/news/{slug}', [NewsController::class, 'show']);
 Route::post('/news', [NewsController::class, 'store']);
+Route::put('/news/{id}', [NewsController::class, 'update']);
+Route::post('/news/{id}', [NewsController::class, 'update']);
+Route::delete('/news/{id}', [NewsController::class, 'destroy']);
 
 // Rute Image Upload (Quill JS)
 Route::post('/upload-image', [ImageUploadController::class, 'upload']);

@@ -15,6 +15,14 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Support\Facades\Route::middleware('api')
                 ->prefix('api/sso')
                 ->group(__DIR__.'/../routes/api_sso.php');
+
+            \Illuminate\Support\Facades\Route::middleware('api')
+                ->prefix('api')
+                ->group(__DIR__.'/../routes/api_surat.php');
+
+            \Illuminate\Support\Facades\Route::middleware('api')
+                ->prefix('api/tourism')
+                ->group(__DIR__.'/../routes/api_tourism.php');
         },
     )
     ->withMiddleware(function (Middleware $middleware): void {

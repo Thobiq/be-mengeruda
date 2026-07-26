@@ -24,7 +24,13 @@ class RbacSeeder extends Seeder
             'manage-apb' => 'Mengelola APB Desa',
             'manage-map' => 'Mengelola Peta Wilayah',
             'manage-org-chart' => 'Mengelola Struktur Organisasi',
-            'manage-gallery' => 'Mengelola Galeri Desa'
+            'manage-gallery' => 'Mengelola Galeri Desa',
+            'manage-tourism-profile' => 'Mengelola Profil Wisata',
+            'manage-umkm' => 'Mengelola Data UMKM',
+            'manage-tourism-places' => 'Mengelola Tempat Wisata',
+            'manage-activities' => 'Mengelola Kegiatan & Adat Wisata',
+            'manage-tourism-news' => 'Mengelola Berita Wisata',
+            'manage-tourism-gallery' => 'Mengelola Galeri Wisata',
         ];
 
         foreach ($permissions as $name => $description) {

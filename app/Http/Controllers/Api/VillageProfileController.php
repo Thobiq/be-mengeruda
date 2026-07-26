@@ -37,10 +37,10 @@ class VillageProfileController extends Controller
             'kecamatan' => 'required|string|max:255',
             'kabupaten' => 'required|string|max:255',
             'provinsi' => 'required|string|max:255',
-            'telp' => 'nullable|string|max:20',
-            'email' => 'nullable|email|max:255',
+            'telp' => 'nullable|string|max:50',
+            'email' => 'nullable|string|max:255',
             'alamat' => 'required|string',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'logo' => 'nullable|file|max:20480',
         ]);
 
         $profile = VillageProfile::first() ?? new VillageProfile();

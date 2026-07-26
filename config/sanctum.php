@@ -20,9 +20,8 @@ return [
 
     'stateful' => explode(',', env('SANCTUM_STATEFUL_DOMAINS', sprintf(
         '%s%s',
-        'localhost,localhost:3000,127.0.0.1,127.0.0.1:8000,::1',
+        'localhost,localhost:3000,localhost:3002,localhost:3003,127.0.0.1,127.0.0.1:3000,127.0.0.1:3002,127.0.0.1:3003,127.0.0.1:8000,::1,tourism.mengeruda.id,e-surat.mengeruda.id,mengeruda.id,sso.mengeruda.id',
         Sanctum::currentApplicationUrlWithPort(),
-        // Sanctum::currentRequestHost(),
     ))),
 
     /*

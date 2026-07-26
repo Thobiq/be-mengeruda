@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'email', 'password', 'nik', 'phone', 'ktp_path', 'is_approved'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -27,11 +27,22 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_approved' => 'boolean',
         ];
     }
 
     public function roles()
     {
         return $this->belongsToMany(Role::class);
+    }
+
+    public function isWarga(): bool
+    {
+        return $this->roles()->where('name', 'warga')->exists();
+    }
+
+    public function isAdminSurat(): bool
+    {
+        return $this->roles()->whereIn('name', ['admin_surat', 'Super Admin', 'Admin'])->exists();
     }
 }
