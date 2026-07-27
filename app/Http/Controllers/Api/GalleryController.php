@@ -18,7 +18,7 @@ class GalleryController extends Controller
 
         $galleries->transform(function ($item) {
             if ($item->image_path) {
-                if (str_starts_with($item->image_path, 'http://') || str_starts_with($item->image_path, 'https://')) {
+                if (\Illuminate\Support\Str::startsWith($item->image_path, ['http://', 'https://'])) {
                     $item->image_url = $item->image_path;
                 } else {
                     $clean = ltrim(str_replace('/storage/', '', $item->image_path), '/');

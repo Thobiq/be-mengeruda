@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'paths' => ['*'],
 
     'allowed_methods' => ['*'],
 
@@ -36,12 +36,20 @@ return [
         'http://127.0.0.1:3003',
         'https://sso.mengeruda.id', 
         'https://mengeruda.id',
+        'https://www.mengeruda.id',
+        'http://mengeruda.id',
+        'http://www.mengeruda.id',
         'https://tourism.mengeruda.id',
         'https://e-surat.mengeruda.id',
         'http://e-surat.mengeruda.id',
     ],
 
-    'allowed_origins_patterns' => [],
+    'allowed_origins_patterns' => [
+        '/.*\.mengeruda\.id$/',
+        '/^https?:\/\/mengeruda\.id$/',
+        '/^http:\/\/localhost:\d+$/',
+        '/^http:\/\/127\.0\.0\.1:\d+$/',
+    ],
 
     'allowed_headers' => ['*'],
 
