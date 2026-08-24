@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RbacSeeder::class,
             ESuratRoleSeeder::class,
-            LetterTemplateSeeder::class,
+            // LetterTemplateSeeder::class,
             TourismSeeder::class,
         ]);
     }

@@ -1,108 +1,96 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\VillageProfileController;
-
-use App\Http\Controllers\Api\NewsController;
+use App\Http\Controllers\Api\Tourism\TourismAttractionController;
+use App\Http\Controllers\Api\Tourism\TourismUmkmController;
+use App\Http\Controllers\Api\Tourism\TourismProductController;
+use App\Http\Controllers\Api\Tourism\TourismNewsController;
+use App\Http\Controllers\Api\Tourism\TourismGalleryController;
+use App\Http\Controllers\Api\Tourism\TourismEventController;
+use App\Http\Controllers\Api\Tourism\TourismProfileController;
+// use App\Http\Controllers\Api\Tourism\AuthController;
 use App\Http\Controllers\Api\ImageUploadController;
-use App\Http\Controllers\Api\DemographicController;
-use App\Http\Controllers\Api\ApbDesaController;
-
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "api" middleware group. Make something great!
-|
-*/
-
-use App\Http\Controllers\PerangkatDesaController;
 use App\Http\Controllers\Api\AuthController;
 
-// Rute Autentikasi Mandiri Profile Desa
+// =======================
+// Rute Autentikasi Mandiri
+// =======================
 Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'user']);
 });
 
-// Struktur Desa (Publik)
-Route::get('/struktur-desa', [PerangkatDesaController::class, 'index']);
+// =======================
+// Rute Publik (Read-Only)
+// =======================
 
-// Struktur Desa (Admin - dilindungi auth/sanctum)
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/struktur-desa', [PerangkatDesaController::class, 'store']);
-    Route::post('/struktur-desa/{id}', [PerangkatDesaController::class, 'update']); // Pakai POST karena ada upload gambar (form-data)
-    Route::delete('/struktur-desa/{id}', [PerangkatDesaController::class, 'destroy']);
-});
+// 1. Tempat Wisata
+Route::get('/attractions', [TourismAttractionController::class, 'index']);
+Route::get('/attractions/{id}', [TourismAttractionController::class, 'show']);
 
-// Peta Desa Routes
-use App\Http\Controllers\Api\MapLocationController;
-Route::get('/map-locations', [MapLocationController::class, 'index']);
-Route::post('/map-locations/import', [MapLocationController::class, 'importGeoJson']);
-Route::get('/map-locations/{id}', [MapLocationController::class, 'show']);
-Route::post('/map-locations', [MapLocationController::class, 'store']);
-Route::post('/map-locations/{id}', [MapLocationController::class, 'update']); // use post with _method=PUT or just post for multipart
-Route::delete('/map-locations/{id}', [MapLocationController::class, 'destroy']);
+// 2. Toko UMKM
+Route::get('/umkms', [TourismUmkmController::class, 'index']);
+Route::get('/umkms/{id}', [TourismUmkmController::class, 'show']);
+Route::get('/umkms/{umkmId}/products', [TourismProductController::class, 'index']);
 
-// APB Desa Routes
-Route::get('/apb-desa', [ApbDesaController::class, 'index']);
-Route::get('/apb-desa/{year}', [ApbDesaController::class, 'show']);
-Route::post('/apb-desa', [ApbDesaController::class, 'storeOrUpdate']);
-Route::delete('/apb-desa/{year}', [ApbDesaController::class, 'destroy']);
+// 3. Produk UMKM
+Route::get('/products', [TourismProductController::class, 'index']);
+Route::get('/products/{id}', [TourismProductController::class, 'show']);
 
-// Rute Profil Desa
-Route::get('/village-profile', [VillageProfileController::class, 'index']);
-Route::post('/village-profile/info', [VillageProfileController::class, 'updateInfo']);
-Route::post('/village-profile/narasi', [VillageProfileController::class, 'updateNarasi']);
+// 4. Berita Pariwisata
+Route::get('/news', [TourismNewsController::class, 'index']);
+Route::get('/news/{idOrSlug}', [TourismNewsController::class, 'show']);
 
-// Rute Berita Desa
-Route::get('/news', [NewsController::class, 'index']);
-Route::get('/news/{slug}', [NewsController::class, 'show']);
-Route::post('/news', [NewsController::class, 'store']);
-Route::put('/news/{id}', [NewsController::class, 'update']);
-Route::post('/news/{id}', [NewsController::class, 'update']);
-Route::delete('/news/{id}', [NewsController::class, 'destroy']);
+// 5. Galeri Pariwisata
+Route::get('/galleries', [TourismGalleryController::class, 'index']);
+Route::get('/galleries/{id}', [TourismGalleryController::class, 'show']);
 
-// Rute Image Upload (Quill JS)
-Route::post('/upload-image', [ImageUploadController::class, 'upload']);
+// 6. Agenda / Kegiatan
+Route::get('/events', [TourismEventController::class, 'index']);
+Route::get('/events/{id}', [TourismEventController::class, 'show']);
 
-// Rute Galeri Desa
-use App\Http\Controllers\Api\GalleryController;
-Route::get('/galleries', [GalleryController::class, 'index']);
-Route::get('/galleries/{gallery}', [GalleryController::class, 'show']);
+// 7. Profil Pariwisata
+Route::get('/profile', [TourismProfileController::class, 'show']);
 
-// Rute Demografi Penduduk
-Route::get('/demographic', [DemographicController::class, 'index']);
-Route::post('/demographic', [DemographicController::class, 'storeOrUpdate']);
+// ==========================================
+// Rute Terproteksi (Admin - Auth via Sanctum)
+// ==========================================
+Route::middleware(['auth:sanctum'])->group(function () {
+    // 1. Tempat Wisata CRUD
+    Route::post('/attractions', [TourismAttractionController::class, 'store']);
+    Route::put('/attractions/{id}', [TourismAttractionController::class, 'update']);
+    Route::delete('/attractions/{id}', [TourismAttractionController::class, 'destroy']);
 
-// Rute Manajemen Administrator (User, Role, Permission)
-use App\Http\Controllers\Api\AdminUserController;
-use App\Http\Controllers\Api\RoleController;
-use App\Http\Controllers\Api\PermissionController;
+    // 2. Toko UMKM CRUD
+    Route::post('/umkms', [TourismUmkmController::class, 'store']);
+    Route::put('/umkms/{id}', [TourismUmkmController::class, 'update']);
+    Route::delete('/umkms/{id}', [TourismUmkmController::class, 'destroy']);
 
-Route::middleware('auth:sanctum')->group(function () {
-    // Manajemen Pengguna
-    Route::get('/admin/users', [AdminUserController::class, 'index']);
-    Route::post('/admin/users', [AdminUserController::class, 'store']);
-    Route::put('/admin/users/{id}', [AdminUserController::class, 'update']);
-    Route::delete('/admin/users/{id}', [AdminUserController::class, 'destroy']);
+    // 3. Produk UMKM CRUD
+    Route::post('/products', [TourismProductController::class, 'store']);
+    Route::put('/products/{id}', [TourismProductController::class, 'update']);
+    Route::delete('/products/{id}', [TourismProductController::class, 'destroy']);
 
-    // Manajemen Peran
-    Route::get('/admin/roles', [RoleController::class, 'index']);
-    Route::post('/admin/roles', [RoleController::class, 'store']);
-    Route::put('/admin/roles/{id}', [RoleController::class, 'update']);
-    Route::delete('/admin/roles/{id}', [RoleController::class, 'destroy']);
+    // 4. Berita Pariwisata CRUD
+    Route::post('/news', [TourismNewsController::class, 'store']);
+    Route::put('/news/{id}', [TourismNewsController::class, 'update']);
+    Route::delete('/news/{id}', [TourismNewsController::class, 'destroy']);
 
-    // Permissions
-    Route::get('/admin/permissions', [PermissionController::class, 'index']);
+    // 5. Galeri Pariwisata CRUD
+    Route::post('/galleries', [TourismGalleryController::class, 'store']);
+    Route::put('/galleries/{id}', [TourismGalleryController::class, 'update']);
+    Route::delete('/galleries/{id}', [TourismGalleryController::class, 'destroy']);
 
-    // Galeri Desa (Admin)
-    Route::post('/galleries', [GalleryController::class, 'store']);
-    Route::put('/galleries/{gallery}', [GalleryController::class, 'update']);
-    Route::delete('/galleries/{gallery}', [GalleryController::class, 'destroy']);
+    // 6. Agenda / Kegiatan CRUD
+    Route::post('/events', [TourismEventController::class, 'store']);
+    Route::put('/events/{id}', [TourismEventController::class, 'update']);
+    Route::delete('/events/{id}', [TourismEventController::class, 'destroy']);
+
+    // 7. Profil Pariwisata Update (PUT dan POST untuk wsp upload FormData)
+    Route::put('/profile', [TourismProfileController::class, 'update']);
+    Route::post('/profile', [TourismProfileController::class, 'update']);
+
+    // 8. Upload Gambar untuk Quill JS / Content Editor
+    Route::post('/upload-image', [ImageUploadController::class, 'upload']);
 });
